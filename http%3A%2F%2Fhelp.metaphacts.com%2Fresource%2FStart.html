@@ -1,0 +1,110 @@
+<div class="metaphacts_help"> 
+  
+  <div id="metaphactory" class="metaphacts_help__startpage-title">
+    <h2>Welcome to data.itatti.harvard.edu</h2>
+  </div>
+  
+  <div class="metaphacts_help__startpage-textbox-row">
+    <div class="metaphacts_help__xxxl-font metaphacts_help__startpage-textbox-top-sub-metaphactory-main metaphacts_help__large-margin-bottom">
+    The metaphactory aims at helping you getting started with your journey into the world of knowledge graphs.
+    It provides basic semantic data integration capabilities and means to visualize data and interact with it
+    using a collection of declaratively configurable HTML5 components.
+    </div>
+    <div class="metaphacts_help__startpage-textbox-top-sub-spacer">&nbsp;</div>  
+    <div class="metaphacts_help__startpage-textbox-top-sub-logo-metaphacts"><a href="http://www.metaphacts.com/" target="_blank"><img src="/metaphacts/branding/metaphacts-logo.png" /></a></div>  
+  </div>
+  <div class="metaphacts_help__startpage-textbox-row">
+    <div class="metaphacts_help__startpage-textbox-top-sub-logo-blazegraph"><a href="https://www.blazegraph.com/" target="_blank"><img src="/images/help/logo-blazegraph.png" /></a></div>    
+    <div class="metaphacts_help__startpage-textbox-top-sub-spacer">&nbsp;</div>  
+    <div class="metaphacts_help__xxxl-font metaphacts_help__startpage-textbox-top-sub-blazegraph-main metaphacts_help__large-margin-bottom">
+    The metaphactory is tightly bundled with the graph database
+      <a href="http://www.blazegraph.com/" target="_blank">Blazegraph DB</a>
+    to deliver high performance semantic data storage and retrieval.
+    </div>
+   </div>
+  <hr/>
+  
+  <div id="semanticcomponents" class="metaphacts_help__startpage-title">
+        <h2>Semantic HTML5 Components</h2>
+  </div>
+  
+  <div class="metaphacts_help__startpage-textbox-row">
+      <div class="text-center">
+        ... a small selection of <semantic-link uri="[[resolvePrefix "Help:HTML5Components"]]">our components.</semantic-link>
+    	</div>
+      <semantic-carousel config='{
+        "query":"[[>Help:SemanticCarouselSampleQuery]]",
+        "layout":{
+          "options":{},
+          "tupleTemplate":"<div class=\"text-center panel panel-default\" style=\"border:none;margin-right:20px;font-size:12px;height:300px;width: 100%;\">
+                  <div class=\"panel-body\" style=\"height: 280px;\">
+                    <img src=\"{{thumbnail.value}}\" style=\"max-height:260px; margin: 0 auto;\" class=\"img-rounded\">
+                  </div>
+                  <div class=\"panel-footer\" style=\"position: relative;  border: none;\">
+                    <semantic-link title=\"{{label.value}}\" class=\"grid-resource-link\" uri=\"{{subject.value}}\">{{label.value}}</semantic-link>
+                  </div>
+                </div>"
+          }
+         }' >
+      </semantic-carousel>
+  </div>
+ 	<hr/> 
+  
+ 	<div id="gettingstarted" class="metaphacts_help__startpage-title">
+     <h2>Getting Started</h2>
+	</div>
+  
+  <div class="metaphacts_help__startpage-textbox-row text-center">
+    <div class="metaphacts_help__startpage-gettingstarted-left"></div>
+    <div class="metaphacts_help__startpage-gettingstarted-middle">
+        <div class="center-block" style="width: 250px;">
+            <img class="img-responsive center-block" src="/images/help/getting-started.jpg" />
+            <div class="metaphacts_help__startpage-gettingstarted-middle__desc">
+                <semantic-link uri="[[resolvePrefix "Help:Tutorial"]]">Hands-On Tutorial</semantic-link>
+            </div>
+     		</div>
+    </div>
+    <div class="metaphacts_help__startpage-gettingstarted-right"></div>
+  </div>
+  
+  <div class="metaphacts_help__startpage-textbox-row text-center">
+   			<semantic-link uri="[[resolvePrefix "Help:DocumentationOverview"]]">Documentation</semantic-link> 
+      | <semantic-link uri="[[resolvePrefix "Help:Installation"]]">Deployment & Installation</semantic-link>
+      | <semantic-link uri="[[resolvePrefix "Help:BasicSystemConfiguration"]]">System Configuration</semantic-link>
+      | <semantic-link uri="[[resolvePrefix "Help:WorkingWithData"]]">Working With Data</semantic-link>
+  </div>
+  
+  <hr/>
+    
+    
+	<div class="metaphacts_help__startpage-textbox-row">
+    <div id="about" class="metaphacts_help__startpage-about-header">
+        <h2>About metaphacts</h2>
+    </div>
+        <div class="metaphacts_help__xl-font">
+          <div class="center-block metaphacts_help__social">
+          The metaphacts team offers an unmatched experience and know-how around enterprise knowledge
+        graphs for our clients in areas such as business, finance, life science, and cultural heritage.
+            
+          With the metaphactory, we provide an end-to-end platform to create and utilize enterprise 
+          knowledge graphs - from semantic graph data management to data-driven application development.
+        Built entirely on open standards and technologies, our platform covers the entire lifecycle of
+          dealing with knowledge graphs. As a main benefit, it enables knowledge workers to create and 
+          gain meaningful insight into their data with one comprehensive software solution.            
+            
+          </div>
+          <div class="center-block metaphacts_help__social metaphacts_help__default-margin-bottom">
+            <b>You want to learn more about our products or have any inquiries or support request?</b>
+            <br/>
+            Then please reach out via one of the following channels:
+            <ul>
+                <li><a class="metaphacts_help__social__link" href="http://www.metaphacts.com" title="Webpage" target="_blank"><i class="metaphacts_help__social__icon-web">&nbsp;</i></a></li>
+                <li><a class="external free" href="mailto:support@metaphacts.com" rel="nofollow" title="mailto:support@metaphacts.com"><i class="metaphacts_help__social__icon-email">&nbsp;</i></a></li>
+                <li><a class="metaphacts_help__social__link" href="http://twitter.com/metaphacts" title="@metaphacts" target="_blank"><i class="metaphacts_help__social__icon-twitter">&nbsp;</i></a></li>
+            </ul>
+          </div>
+     </div><!-- end help xl-font -->
+</div>
+
+
+</div>

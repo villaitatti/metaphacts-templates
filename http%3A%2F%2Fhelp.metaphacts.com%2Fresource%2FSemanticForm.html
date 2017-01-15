@@ -1,0 +1,395 @@
+<div class="metaphacts_help">
+  <ol class="breadcrumb" style="background:white;border:none;padding-left:0px;">
+    <li>
+      <semantic-link title="Help" uri="http://help.metaphacts.com/resource/Start">Help</semantic-link>
+    </li>
+    <li>
+      <semantic-link title="Documentation" uri="http://help.metaphacts.com/resource/DocumentationOverview">Documentation</semantic-link>
+    </li>
+    <li>
+      <semantic-link title="Components" uri="http://help.metaphacts.com/resource/HTML5Components">Components</semantic-link>
+    </li>
+    <li class="active">Semantic Form</li>
+  </ol>
+
+  <h1>Semantic Form<sup style="font-size:0.5em;top:-1em;" title="Component names or configuration options may change in the near future.">BETA</sup></h1>
+
+    <p>
+      The form component can be used to create declarative authoring forms for knowledge graphs.
+    </p>
+
+    The <code><semantic-form></semantic-form></code> component needs to be configured mainly on two levels: 
+    <ul>
+      <li><a href="#fielddefinitions">Field Definitions</a></li>
+      <li><a href="#html5markup">HTML5 Markup</a></li>
+    </ul>
+
+
+    <h2 id="fielddefinitions">Field Definitions</h2>
+    <p>
+      So called <b>field definitions</b> provide an abstraction over the data model (aka ontology) by specifying complex path patterns within knowledge graph as SPARQL patterns.
+    </p>
+    <p>
+      The <b>field definitions</b> can be used to instruct the <b>form</b> how to read and update <u>atomic values</u> within the graph.
+      Furthermore, they can be used to specify certain validation constraints such as datatypes, cardinalities or pattern matches against existing database entries.
+    </p>
+    <p>
+      Attributes of a field definition are (mandatory attributes marked with *):
+    </p>
+          <table class="table table-striped table-bordered">
+          <tbody>
+              <tr>
+                  <th>Property</th>
+                  <th>Comment</th>
+              </tr>
+              <tr>
+                  <td>id*</td>
+                  <td>unique identifier of the field definition, in most cases it
+                  will be the URI of the field definition</td>
+              </tr>
+              <tr>
+                  <td>label*</td>
+                  <td>
+                      <p>A human readable label for the field. Will be used as default label for the input elements within the form.</p>
+                  </td>
+              </tr>
+              <tr>
+                  <td>description</td>
+                  <td>
+                      <p>A human readable description of the field.</p>
+                  </td>
+              </tr>
+              <tr>
+                  <td>selectPattern</td>
+                  <td>
+                      <p>SPARQL SELECT query string</p>
+                      <ul>
+                          <li><strong>MUST</strong> expose a <em>$value</em> projection variable
+                          which binds the current value(s)</li>
+                          <li><em>$subject</em> refers to the current entity to be created/edited</li>
+                          <li><em>$value</em> refers to the current atomic values(s) connected to the $subject through the graph pattern</li>
+                      </ul>
+                  </td>
+              </tr>
+              <tr>
+                  <td>insertPattern*</td>
+                  <td>
+                      <p>SPARQL INSERT query string to create new values</p>
+                      <ul>
+                        <li><strong>MUST</strong> use a <em>$subject</em> and <em>$value</em> variable inside of the query</li>
+                        <li><em>$subject</em> refers to the current entity to be created/edited</li>
+                        <li><em>$value</em> refers to the new atomic values(s) connected to the $subject through the graph pattern</li>
+                      </ul>
+                  </td>
+              </tr>
+              <tr>
+                  <td>deletePattern</td>
+                  <td>
+                      <p>SPARQL DELETE query string to delete old values (only required if running in SPARQL mode)</p>
+                      <p>The following conventions apply:</p>
+                      <ul>
+                        <li><strong>MUST</strong> use a <em>$subject</em> and <em>$value</em> variable inside of the query</li>
+                        <li><em>$subject</em> refers to the current entity to be edited</li>
+                        <li><em>$value</em> refers to the old (to be deleted) atomic values(s) connected to the $subject through the graph pattern</li>
+                      </ul>
+                  </td>
+              </tr>
+              <tr>
+                  <td>
+                      <p>askPattern</p>
+                  </td>
+                  <td>
+                      <p>SPARQL ASK query string, parameterized with the current $subject and new $value. Will be execute while typing to validate user inputs against the database. </p>
+                      <p>The following conventions apply:</p>
+                      <div>
+                        <ul>
+                          <li><em>$value</em> refers to the new atomic values connected to the $subject through the graph pattern</li>
+                          <li><em>$subject</em> can be used inside the query, referring to the current entity to be created/edited</li>
+                        </ul>
+                      </div>
+                  </td>
+              </tr>
+              <tr>
+                  <td>autosuggestionPattern</td>
+                  <td>
+                      <p>SPARQL SELECT query string for autosuggestion lookups</p>
+                      <p>The following convention apply:</p>
+                      <ul>
+                         <li><strong>MUST</strong> expose a <em>$value</em> and <em>$label</em> projection variable
+                          which binds the autosuggestion value(s) and a human readable label</li>
+                          <li><em>$subject</em> can be used inside the query, referring to the current entity to be created/edited</li>
+                          <li>if query contains a <b>?token</b> variable, this will be
+                          syntactically replaced by the actual token the user is typing i.e.
+                          into the autosuggestion field</li>
+                      </ul>
+                  </td>
+              </tr>
+              <tr>
+                  <td>valueSetPattern</td>
+                  <td>
+                      <p>SPARQL SELECT query string for populating set choices such as in dropdown</p>
+                      <p>The following conventions apply:</p>
+                      <ul>
+                          <li><strong>MUST</strong> expose a <em>$value</em> projection variable
+                          which binds the current value(s)</li>
+                          <li><em>$subject</em> can be used inside the query, referring to the current entity to be created/edited</li>
+                      </ul>
+                  </td>
+              </tr>
+              <tr>
+                  <td>minOccurs</td>
+                  <td>xsd schema min cardinality number of 0:N. 0 for not required. Defaults to 0.</td>
+              </tr>
+              <tr>
+                  <td>maxOccurs</td>
+                  <td>xsd schema max cardinality number of 1:N or "unbound" for infinit (default).</td>
+              </tr>
+              <tr>
+                  <td>xsdDatatype</td>
+                  <td>
+                      <p>a full or prefix XSD URI datatype identifier as
+                      specified in <a href=
+                      "https://www.w3.org/TR/rdf11-concepts/#xsd-datatypes">RDF 1.1</a></p>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+
+      <b>Note:</b><br>
+      <p>Whether <b>$</b> or <b>?</b> are being used as SPARQL variable identifier does not matter (both are valid in SPARQL). However, we recommend using <b>$</b> for variables to be replaced/injected by the form, for example, <b>$subject</b> or <b>$value.</b> We recommend this just for sake of readability i.e. the one is reminded when reading or modifying these patterns, that certain variables will be replaced/injected later.</p>
+      
+      <h2 id="html5markup">HTML5 Markup</h2>
+      <p>While field definitions are being defined on an abstract level, forms and corresponding input elements can be instantiated using custom HTML5 components including references to the field definitions. </p>
+
+      <p>The basic structure of a form markup looks as follows:</p>
+      <p>The form itself is instantiated through the custom HTML5 tag <code>[[{{documentation}}]]<semantic-form> ... children... </semantic-form>[[{{/documentation}}]]</code> </p>
+      <p>The only mandatory attribute on the form component is the attribute <code>fields</code>, which expects and JSON object array of field definitions.</p>
+      <pre><code>
+<semantic-form 
+  fields='[{
+    "id": "name",
+    "label": "Name",
+    "insertPattern": "INSERT { $subject foaf:name $value } WHERE {}"
+    }]'
+>
+  ... children ...
+  
+</semantic-form>
+      </code></pre>
+  
+  		Furthermore, the following attributes can be configured:
+  		<style>
+        dt{
+        	margin-left: 1em;
+        }
+       	dd{
+        	margin-left: 3em;
+        }
+      </style>
+      <dl>
+        <dt><code>subject: IRI string</code></dt>
+        <dd>
+          By default the subject of the form subject (that is the IRI of resource to be treated a subject to be edited) is set the to the current resource context, i.e. <b>IRI</b> of the page where the editor is instantiated. 
+          To set the subject to a different resource an optional HTML attribute <code>subject="{IRI}"</code> can be provided to the form component. 
+          In principle, it is also possible to parameterize this value through, for example, a <semantic-link uri="http://help.metaphacts.com/resource/BackendTemplating">backend function which returns a single value from a SPARQL query</semantic-link>. 
+          For example <code><semantic-form subject=[[{{documentation}}]][[singleValueFromSelect "SELECT ?newIRI WHERE {BIND(uri(concat(str(:),\"record\",STRUUID())) as ?newIRI)}"]][[{{/documentation}}]]> ... children... </semantic-form></code> will always (at each rendering) set the form's subject to a new, auto-generated IRI in the default namespace.
+        </dd>
+        <dt><code>browser-persistence: boolean</code></dt>
+        <dd>Whether to save intermediate changes in browser's local storage. Both require dedicated ACL permissions. Default: true</dd>
+        <dt><code>persistence: string ('sparql' | 'ldp')</code></dt>
+        <dd>Persistence and operation mode to use for creating and modifying data.
+            In 'ldp' mode, all generated statements for a form subject are being stored into a dedicated LDP container and as such can easily be updated or even reverted and have provenance information attached.
+            However, 'ldp' requires to enable quads mode in the triple store. In the 'sparql' mode no provenance can be captured. Default: ldp</dd>
+        <dt><code>post-action: string ('reload' | 'redirect')</code></dt>
+        <dd>Optional post-action to be performed after saving the form. Can be either 'reload' or 'redirect' (redirects to the subject of the form) or any IRI string to which the form will redirect. Default: Redirect to subject of the form.</dd>
+       </dl>
+
+      
+      <p>
+        Within the form component, arbitrary standard and custom HTML5 elements can be nested as 
+        children elements e.g. for layout purpose tabs can be used. 
+      </p>
+      <p>
+        To instantiate a certain field through an input element, one can choose from a set of four dedicated form input elements, whereas each input <strong>MUST</strong> reference a field definition via the <code>for='{fieldId}'</code> attribute.
+      </p>
+      <ul>
+        <li><code><semantic-form-text-input for='{fieldId}'> </semantic-form-text-input></code>
+        <p>Commonly used for Literal values. However, can also be used for IRIs if corresponding xsdDatatype of field definition is xsd:anyURI. Accepts an optional attribute "languages", which can be used to let the user select a language tag if xsdDatatype is xsd:langString. For example, <code><semantic-form-text-input for='name' languages='["ru", "en"]'> </semantic-form-text-input></code> will offer to select a Russian or English language tag. <br> Setting the optional HTML attribute <code>multline</code> to <code>multline=true</code> will render a autoresizable text area. </p> </li>
+        
+        <li><code><semantic-form-select-input for='{fieldId}'> </semantic-form-select-input></code>
+        <p>Offers a dropdown list to choose entities from, using the "valueSetPattern" from the referenced field definition. </p> </li>
+       
+        <li><code><semantic-form-autocomplete-input for='{fieldId}'> </semantic-form-autocomplete-input></code>
+        <p>Dynamic autosuggestion while user enters search token, using the "autosuggestionPattern" from the referenced field definition. </p> </li>
+        
+       <li><code><semantic-form-datetime-input for='{fieldId}'> </semantic-form-datetime-input></code>
+        <p>Component to  either enter date or dateTime string or to select them visually from a calendar. All dates are always displayed as and normalized to UTC strings. Format will be offered depdending on the xsd datatype as speficified in the referenced field definition.</p> </li>
+     </ul>
+    
+    <p>
+      Furthermore, static form elements such as a submit button <code><button name='submit'>Save</button></code> or a reset button <code><button name='reset'>Reset</button></code> can be placed somewhere within the form.
+     </p>
+      
+    <h3>Reading Field Definitions from the Database </h3>  
+    <p>
+      Instead of defining the field definitions inline (as above), field definitions may also have an RDF representation and can be stored in the database (for example, when the Field Definition Catalog is used). The following backend template helper function can be used to read the definitions from the database:
+    </p>
+
+    <ul>
+      <li>
+        <b>Read all field definitions:</b> <code>[[{{documentation}}]][[fieldDefinitions]][[{{/documentation}}]]</code><br>
+        Returns a JSON object array with all field definitions stored in the system. To reference a specific field definition from the form input elements, the full IRI of the field identifier needs to be used. Example:<br> <code><semantic-form fields=[[{{documentation}}]][[fieldDefinitions]][[{{/documentation}}]] > &emsp; <semantic-form-text-input for='http://www.researchspace.org/instances/fields/expressionDisplayLabel'> </semantic-form-text-input> </semantic-form> </code>
+      </li>
+      <li>
+        <b>Read specific field definitions:</b> <code>[[{{documentation}}]][[fieldDefinitions alias1="http://www.researchspace.org/instances/fields/expressionDisplayLabel"]][[{{/documentation}}]]</code><br>
+        Reads the specified field definitions (identified by its IRI) and re-writes the identifier to a local alias for reference from the input element.
+         Example:<br> <code><semantic-form fields=[[{{documentation}}]][[fieldDefinitions alias1="http://www.researchspace.org/instances/fields/expressionDisplayLabel"]][[{{/documentation}}]] > <semantic-form-text-input for='alias1'> </semantic-form-text-input></semantic-form> </code>
+      </li>
+    </ul>
+    <h1> Example Form</h1>      
+    The following two examples show how to create 1) simple field definitions and 2) complex field definitions that create sub-graphs for the <a href="http://www.cidoc-crm.org/comprehensive_intro.html" target="_blank">CIDOC Conceptual Reference Model</a> ontology.
+    <h2>Example 1: Simple field definitions</h2>  
+    In the following we show a very simple example form with two simple field definitions to create a new CRM object.
+    The fields capture an RDFS label as well as the CRM type, which can be selected from a given set of CRM type.      
+    <mp-code-example>
+        <semantic-form 
+         subject=[[singleValueFromSelect "SELECT ?newIRI WHERE { BIND( uri(concat(\"http://www.example.com/id/\",STRUUID())) as ?newIRI)}"]] 
+         fields='[
+          {
+            "id": "type",
+            "label": "Type",
+            "description": "The type of the created instance",
+            "xsdDatatype": "xsd:anyURI",
+            "minOccurs": "1",
+            "maxOccurs": "1",
+            "valueSetPattern": "SELECT $value $label WHERE { VALUES ($value $label) 
+                                { (<http://www.cidoc-crm.org/cidoc-crm/E22_Man-Made_Object> \"Man Made Object\")
+                                  (<http://www.cidoc-crm.org/cidoc-crm/E73_Information_Object> \"Information Object\") } }",    
+            "selectPattern": "SELECT $value WHERE { $subject a $value }",
+            "insertPattern": "INSERT { $subject a $value } WHERE {}",
+            "deletePattern": "DELETE { $subject a $value } WHERE {}"
+          },
+          {
+            "id": "label",
+            "label": "Label",
+            "description": "The label used to display the instance",
+            "xsdDatatype": "xsd:string",
+            "minOccurs": "1",
+            "maxOccurs": "1",
+            "selectPattern": "SELECT $value WHERE { $subject rdfs:label $value }",
+            "insertPattern": "INSERT { $subject rdfs:label $value } WHERE {}",
+            "deletePattern": "DELETE { $subject rdfs:label $value } WHERE {}"
+          }
+        ]'>
+          <h3>Create new CRM Instance</h3>
+          <semantic-form-text-input for='label'></semantic-form-text-input>   
+          <semantic-form-select-input for='type'></semantic-form-select-input>
+
+          <!-- save and reset button for form -->
+          <button name="submit">Save</button>
+          <button name="reset">Reset</button>
+        </semantic-form>
+    </mp-code-example>
+
+      <h2>Example 2: Complex field definitions</h2>  
+      The following example shows more complex field definitions, where the field definition patterns map to complex CRM graph structures. We also show how to create a more complex, tabbed layout for the form.
+      <mp-code-example>
+        <semantic-form 
+            subject=[[singleValueFromSelect "SELECT ?newIRI WHERE { BIND( uri(concat(\"http://www.example.com/id/\",STRUUID())) as ?newIRI)}"]] 
+            fields='[
+            {
+            "id": "type",
+            "label": "Type",
+            "description": "The type of the created instance",
+            "xsdDatatype": "xsd:anyURI",
+            "minOccurs": "1",
+            "maxOccurs": "1",
+            "valueSetPattern": "SELECT $value $label WHERE { VALUES ($value $label) 
+                            { (<http://www.cidoc-crm.org/cidoc-crm/E22_Man-Made_Object> \"Man Made Object\")
+                              (<http://www.cidoc-crm.org/cidoc-crm/E73_Information_Object> \"Information Object\") } }",    
+            "selectPattern": "SELECT $value WHERE { $subject a $value }",
+            "insertPattern": "INSERT { $subject a $value } WHERE {}",
+            "deletePattern": "DELETE { $subject a $value } WHERE {}"
+            },
+            {
+            "id": "label",
+            "label": "Label",
+            "description": "The label used to display the instance",
+            "xsdDatatype": "xsd:string",
+            "minOccurs": "1",
+            "maxOccurs": "1",
+            "selectPattern": "SELECT $value WHERE { $subject rdfs:label $value }",
+            "insertPattern": "INSERT { $subject rdfs:label $value } WHERE {}",
+            "deletePattern": "DELETE { $subject rdfs:label $value } WHERE {}"
+            },
+            {
+            "id": "acquisitionBeginDate",
+            "label": "Acquisition begin date",
+            "description": "The acquisition start date refers to the date that the current owning body acquired the object",
+            "xsdDatatype": "xsd:dateTime",
+            "minOccurs": "1",
+            "maxOccurs": "1",
+            "selectPattern": "PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/> SELECT ?value WHERE {$subject crm:P24i_changed_ownership_through ?acquisition. ?acquisition crm:P4_has_time-span ?acquisitionDate. ?acquisitionDate crm:P82a_begin_of_the_begin ?value }",
+            "insertPattern": "PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/> INSERT {  $subject crm:P24i_changed_ownership_through ?acquisition. ?acquisition crm:P4_has_time-span ?acquisitionDate. ?acquisitionDate crm:P82a_begin_of_the_begin $value }    WHERE {     BIND(IRI(CONCAT(STR(?subject), \"/acquisition\")) as ?acquisition).  BIND(IRI(CONCAT(STR(?subject), \"/acquisition/date\")) as ?acquisitionDate).}",
+            "deletePattern": "DELETE {  $subject crm:P24i_changed_ownership_through ?acquisition. ?acquisition crm:P4_has_time-span ?acquisitionDate. ?acquisitionDate crm:P82a_begin_of_the_begin ?date} WHERE { $subject crm:P24i_changed_ownership_through ?acquisition. ?acquisition crm:P4_has_time-span ?acquisitionDate. ?acquisitionDate crm:P82a_begin_of_the_begin $value. ?acquisitionDate crm:P82a_begin_of_the_begin ?date. }"
+            }, 
+            {
+            "id": "acquisitionEndDate",
+            "label": "Acquisition end date",
+            "description": "The acquisition end date refers to the date that the current owning body acquired the object",
+            "xsdDatatype": "xsd:dateTime",
+            "minOccurs": "1",
+            "maxOccurs": "1",
+            "selectPattern": "PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/> SELECT ?value WHERE {$subject crm:P24i_changed_ownership_through ?acquisition. ?acquisition crm:P4_has_time-span ?acquisitionDate. ?acquisitionDate crm:P82a_end_of_the_end ?value }",
+            "insertPattern": "PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/> INSERT {  $subject crm:P24i_changed_ownership_through ?acquisition. ?acquisition crm:P4_has_time-span ?acquisitionDate. ?acquisitionDate crm:P82a_end_of_the_end  $value }    WHERE {     BIND(IRI(CONCAT(STR(?subject), \"/acquisition\")) as ?acquisition).  BIND(IRI(CONCAT(STR(?subject), \"/acquisition/date\")) as ?acquisitionDate).}",
+            "deletePattern": "DELETE {  $subject crm:P24i_changed_ownership_through ?acquisition. ?acquisition crm:P4_has_time-span ?acquisitionDate. ?acquisitionDate crm:P82a_end_of_the_end  ?date} WHERE { $subject crm:P24i_changed_ownership_through ?acquisition. ?acquisition crm:P4_has_time-span ?acquisitionDate. ?acquisitionDate crm:P82a_end_of_the_end  $value. ?acquisitionDate crm:P82a_end_of_the_end  ?date. }"
+            }, {
+            "id": "acquisitionType",
+            "label": "Acquistion Type",
+            "description": "The type of acquisition refers to how the thing was transferred to the owning organisation. For example, donation, purchase, etc.",
+            "xsdDatatype": "xsd:anyURI",
+            "minOccurs": "1",
+            "maxOccurs": "1",
+            "selectPattern": "PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/> SELECT $value ?label WHERE {$subject crm:P24i_changed_ownership_through ?acquisition. ?acquisition crm:P2_has_type $value. $value skos:prefLabel $label  }",
+            "valueSetPattern": "PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/> SELECT DISTINCT $value $label WHERE { VALUES ($value $label) 
+                            { (<http://collection.britishmuseum.org/id/thesauri/acquisition/B> \"Bequeathed\")
+                              (<http://collection.britishmuseum.org/id/thesauri/acquisition/D> \"Donated\")
+                              (<http://collection.britishmuseum.org/id/thesauri/acquisition/FU> \"Funded\")
+                              (<http://collection.britishmuseum.org/id/thesauri/acquisition/P> \"Purchased\") }}",
+            "insertPattern": "INSERT { ?acquisition a crm:E8_Acquisition . ?acquisitionType a crm:E55_Type . $subject crm:P24i_changed_ownership_through ?acquisition. ?acquisition crm:P2_has_type $value. } WHERE { BIND(uri(concat(str($subject),\"/acquisition\")) as ?acquisition) . }"
+            }, 
+            {
+            "id": "acquisitionFromActor",
+            "label": "Acquisition from Actor",
+            "xsdDatatype": "xsd:anyURI",
+            "minOccurs": "1",
+            "maxOccurs": "1",
+            "selectPattern": "PREFIX rso: <http://www.researchspace.org/ontology/> PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/> SELECT ?value ?label WHERE {$subject crm:P24i_changed_ownership_through ?acquisition. ?acquisition crm:P23_transferred_title_from $value. $value rso:displayLabel ?label }",
+            "autosuggestionPattern": "PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/> SELECT $value $label WHERE { VALUES ($value $label) 
+                            { (<http://collection.britishmuseum.org/id/person-institution/104636> \"The British Museum\")
+                              (<http://collection.britishmuseum.org/id/person-institution/170898> \"British Consulate General, Atlanta\")
+                              (<http://collection.britishmuseum.org/id/person-institution/188537> \"British Association for the Advancement of Science\") }
+                              FILTER REGEX($label, \"?token\", \"i\") } ",
+            "insertPattern": "INSERT { ?acquisitionActor a crm:E39_Actor . ?acqusition a crm:E8_Acquisition . $subject crm:P24i_changed_ownership_through ?acquisition . ?acquisition crm:P23_transferred_title_from $value . } WHERE { BIND(uri(concat(str(?subject),\"/acquisition\")) as ?acquisition) }"
+            }
+            ]'>
+              <h3>Create CRM Instance </h3>
+              <bs-tabs fixed-key="form">
+                <bs-tab event-key="1" title="General Information">   
+                  <semantic-form-text-input for='label'></semantic-form-text-input>   
+                  <semantic-form-select-input for='type'></semantic-form-select-input>
+                </bs-tab>
+               <bs-tab event-key="2" title="Acquisition">
+                  <semantic-form-datetime-input for="acquisitionBeginDate"></semantic-form-datetime-input>
+                  <semantic-form-datetime-input for="acquisitionEndDate"></semantic-form-datetime-input> 
+                  <semantic-form-select-input for='acquisitionType'></semantic-form-select-input>
+                  <semantic-form-autocomplete-input for='acquisitionFromActor' placeholder='Search for an actor. Type e.g. "British"'></semantic-form-autocomplete-input>
+               </bs-tab>
+              </bs-tabs>
+              <!-- save and reset button for form -->
+              <button name="submit">Save</button>
+              <button name="reset">Reset</button>
+          </semantic-form>  
+    </mp-code-example>
+
+</div>

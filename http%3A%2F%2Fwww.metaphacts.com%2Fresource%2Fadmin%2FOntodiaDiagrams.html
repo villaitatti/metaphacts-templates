@@ -1,0 +1,35 @@
+<div class="col-md-8 col-md-offset-2" style="height: 100%;">
+    <ol class="breadcrumb" style="background:white;border:none;padding-left:0px;">
+        <li>
+            <semantic-link title="System Settings" data-uri="http://www.metaphacts.com/resource/admin/">System Settings</semantic-link>
+        </li>
+        <li class="active">Ontodia diagrams</li>
+    </ol>
+    <h2>Ontodia diagrams</h2>
+    <semantic-table config='{
+              "query":"
+                      prefix ontodia: <http://www.ontodia.org/schema/v1#>
+                      SELECT ?diagram ?label ?author ?modified WHERE {
+                           ?diagram a ontodia:diagram;
+                            rdfs:label ?label;
+                            <http://www.w3.org/ns/prov#wasAttributedTo> ?author;
+														<http://www.w3.org/ns/prov#generatedAtTime> ?modified
+                       }
+                   ",
+                   "columnConfiguration" : [
+                        {"variableName":"diagram", "displayName":"Diagram"},
+                        {"variableName":"author", "displayName":"Author"},
+                        {"variableName":"modified", "displayName":"Modified"}
+                   ],
+                   "layout":{
+                     "tupleTemplate": null,
+                     "options":{
+                        "showFilter":true,
+                        "resultsPerPage":15
+                     }
+                    }
+            }'>
+    </semantic-table>
+</div>
+
+

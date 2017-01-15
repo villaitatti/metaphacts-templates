@@ -1,0 +1,271 @@
+
+  <div id="metaphactory" class="metaphacts_help__startpage-title">
+    <h2>Welcome to data.itatti.harvard.edu</h2>
+    <br /><p>
+    <a href="http://itatti.harvard.edu" target="_blank"><img src="http://itatti.harvard.edu/sites/default/files/itatti/files/itatti_logo.png" /></a>
+    </p>
+  </div>
+
+
+  <hr/>
+
+
+
+<bs-row>
+  
+    <bs-col sm=8 sm-offset=2 >
+      <h3> Simple Search</h3> 
+      <semantic-simple-search config='{
+        "query":"
+                          
+SELECT ?uri ?label ?typelabel WHERE { GRAPH  <http://data.itatti.harvard.edu/resource/florentinedrawings/berenson1938> {?uri ?label ?typelabel  }  filter( regex(str(?typelabel),  \"?token\", \"i\" ))  } LIMIT 10                          
+        ",
+        "searchTermVariable":"token",
+        "resourceSelection":{
+          "resourceBindingName":"typelabel",
+          "template":"<span style=\"color: blue;\"></i><a href=\"http://data.itatti.harvard.edu/resource/?uri={{uri.value}}\" target=\"_blank\"> {{typelabel.value}}</a> </span> - ({{label.value}})"
+        },
+        "inputPlaceholder":"Search for something e.g. \"Michelangelo\""
+      }'>
+      </semantic-simple-search>
+  </bs-col>
+</bs-row>
+<hr >
+
+
+<bs-row>
+      <bs-col sm=8 sm-offset=2 >
+      <h3>Projects</h3>
+        <br />
+        <bs-col sm=5 >
+
+    <a href="http://florentinedrawings.itatti.harvard.edu" target="_blank"><img src="http://florentinedrawings.itatti.harvard.edu//assets/logo-0779b2041a755e58ba59150959713888a1e219944e7a8758f91db8708681b41c.png" thumbnail/></a>
+
+        
+        </bs-col>
+        
+    
+</bs-col>
+    
+  </bs-row>
+
+                
+<hr >
+        
+        
+<bs-row>
+  <bs-col sm=8 sm-offset=2 >
+   
+    <h2>Named Graphs</h2>
+
+
+    <bs-tabs unmount-on-exit=true>
+        <bs-tab event-key="1" title="Berenson1903" style="padding-top:20px;">
+
+          
+          <!-- start graph data -->
+          
+    <b>URI</b>: <i style="font-size: 12px;">data.itatti.harvard.edu/resource/florentinedrawings/berenson1903</i> <br><br>
+          
+         <h2> Statement Statistics </h2>
+          <table class="table table-striped">
+            <tbody>
+              <tr>
+                <td>Number Of Distinct Statements</td>
+                <td><semantic-query query='SELECT DISTINCT  (COUNT(*) as ?number) WHERE{ GRAPH <http://data.itatti.harvard.edu/resource/florentinedrawings/berenson1903>{?s ?p ?o} } LIMIT 1' template='{{#each bindings}}{{number.value}}{{/each}}'></semantic-query></td>
+              </tr> 
+              <tr>
+                <td>Number Of Distinct Subjects</td>
+                <td><semantic-query query='SELECT  (COUNT(DISTINCT ?s) as ?number) WHERE{ GRAPH <http://data.itatti.harvard.edu/resource/florentinedrawings/berenson1903>{?s ?p ?o} } LIMIT 1' template='{{#each bindings}}{{number.value}}{{/each}}'></semantic-query></td>
+              </tr>
+              <tr>
+                <td>Number Of Distinct Predicates</td>
+                <td><semantic-query query='SELECT  (COUNT(DISTINCT ?p) as ?number) WHERE{ GRAPH <http://data.itatti.harvard.edu/resource/florentinedrawings/berenson1903>{?s ?p ?o} } LIMIT 1' template='{{#each bindings}}{{number.value}}{{/each}}'></semantic-query></td>
+              </tr>
+              <tr>
+                <td>Number Of Distinct Object Literals</td>
+                <td><semantic-query query='SELECT  (COUNT(DISTINCT ?o) as ?number) WHERE{ GRAPH <http://data.itatti.harvard.edu/resource/florentinedrawings/berenson1903>{?s ?p ?o. FILTER isLiteral(?o)} } LIMIT 1' template='{{#each bindings}}{{number.value}}{{/each}}'></semantic-query></td>
+              </tr>
+              <tr>
+                <td>Number Of Distinct Object IRIs</td>
+                <td><semantic-query query='SELECT  (COUNT(DISTINCT ?o) as ?number) WHERE{ GRAPH <http://data.itatti.harvard.edu/resource/florentinedrawings/berenson1903>{?s ?p ?o. FILTER isURI(?o)} } LIMIT 1' template='{{#each bindings}}{{number.value}}{{/each}}'></semantic-query></td>
+              </tr>
+            </tbody>
+           </table>  
+          <h2> Class Usage </h2>
+          <i>The chart is limit to display the top 20 classes only.</i>
+          <semantic-chart type="bar" 
+                          provider="chartjs" 
+                          query="SELECT ?class (COUNT(DISTINCT ?s) AS ?usage) WHERE { GRAPH <http://data.itatti.harvard.edu/resource/florentinedrawings/berenson1903> {?s a ?class.}  }GROUP BY ?class ORDER BY DESC(?usage) LIMIT 20" 
+                          sets='[{"dataSetName": "Class Usage", "category": "class", "value": "usage"}]'>
+          </semantic-chart>
+          <h2> Propterty Usage </h2>
+					<i>The chart is limit to display the top 20 properties only.</i>
+          <semantic-chart type="bar" 
+                          provider="chartjs" 
+                          query="SELECT DISTINCT ?p (COUNT(?p) AS ?usage) WHERE { GRAPH <http://data.itatti.harvard.edu/resource/florentinedrawings/berenson1903> {?s ?p ?o.}  }GROUP BY ?p ORDER BY DESC(?usage) LIMIT 20" 
+                          sets='[{"dataSetName": "Property Usage", "category": "p", "value": "usage"}]'>
+          </semantic-chart>
+      
+<!-- end graph data -->
+
+        </bs-tab>
+        <bs-tab event-key="2" title="Berenson1938" style="padding-top:20px;">
+
+ 
+          
+          <!-- start graph data -->
+          
+    <b>URI</b>: <i style="font-size: 12px;">data.itatti.harvard.edu/resource/florentinedrawings/berenson1938</i> <br><br>
+          
+         <h2> Statement Statistics </h2>
+          <table class="table table-striped">
+            <tbody>
+              <tr>
+                <td>Number Of Distinct Statements</td>
+                <td><semantic-query query='SELECT DISTINCT  (COUNT(*) as ?number) WHERE{ GRAPH <http://data.itatti.harvard.edu/resource/florentinedrawings/berenson1938>{?s ?p ?o} } LIMIT 1' template='{{#each bindings}}{{number.value}}{{/each}}'></semantic-query></td>
+              </tr> 
+              <tr>
+                <td>Number Of Distinct Subjects</td>
+                <td><semantic-query query='SELECT  (COUNT(DISTINCT ?s) as ?number) WHERE{ GRAPH <http://data.itatti.harvard.edu/resource/florentinedrawings/berenson1938>{?s ?p ?o} } LIMIT 1' template='{{#each bindings}}{{number.value}}{{/each}}'></semantic-query></td>
+              </tr>
+              <tr>
+                <td>Number Of Distinct Predicates</td>
+                <td><semantic-query query='SELECT  (COUNT(DISTINCT ?p) as ?number) WHERE{ GRAPH <http://data.itatti.harvard.edu/resource/florentinedrawings/berenson1938>{?s ?p ?o} } LIMIT 1' template='{{#each bindings}}{{number.value}}{{/each}}'></semantic-query></td>
+              </tr>
+              <tr>
+                <td>Number Of Distinct Object Literals</td>
+                <td><semantic-query query='SELECT  (COUNT(DISTINCT ?o) as ?number) WHERE{ GRAPH <http://data.itatti.harvard.edu/resource/florentinedrawings/berenson1938>{?s ?p ?o. FILTER isLiteral(?o)} } LIMIT 1' template='{{#each bindings}}{{number.value}}{{/each}}'></semantic-query></td>
+              </tr>
+              <tr>
+                <td>Number Of Distinct Object IRIs</td>
+                <td><semantic-query query='SELECT  (COUNT(DISTINCT ?o) as ?number) WHERE{ GRAPH <http://data.itatti.harvard.edu/resource/florentinedrawings/berenson1938>{?s ?p ?o. FILTER isURI(?o)} } LIMIT 1' template='{{#each bindings}}{{number.value}}{{/each}}'></semantic-query></td>
+              </tr>
+            </tbody>
+           </table>  
+          <h2> Class Usage </h2>
+          <i>The chart is limit to display the top 20 classes only.</i>
+          <semantic-chart type="bar" 
+                          provider="chartjs" 
+                          query="SELECT ?class (COUNT(DISTINCT ?s) AS ?usage) WHERE { GRAPH <http://data.itatti.harvard.edu/resource/florentinedrawings/berenson1938> {?s a ?class.}  }GROUP BY ?class ORDER BY DESC(?usage) LIMIT 20" 
+                          sets='[{"dataSetName": "Class Usage", "category": "class", "value": "usage"}]'>
+          </semantic-chart>
+          <h2> Propterty Usage </h2>
+					<i>The chart is limit to display the top 20 properties only.</i>
+          <semantic-chart type="bar" 
+                          provider="chartjs" 
+                          query="SELECT DISTINCT ?p (COUNT(?p) AS ?usage) WHERE { GRAPH <http://data.itatti.harvard.edu/resource/florentinedrawings/berenson1938> {?s ?p ?o.}  }GROUP BY ?p ORDER BY DESC(?usage) LIMIT 20" 
+                          sets='[{"dataSetName": "Property Usage", "category": "p", "value": "usage"}]'>
+          </semantic-chart>
+      
+<!-- end graph data -->
+          
+        </bs-tab>
+        <bs-tab event-key="3" title="Berenson1961" style="padding-top:20px;">
+ 
+          
+          
+          <!-- start graph data -->
+          
+    <b>URI</b>: <i style="font-size: 12px;">data.itatti.harvard.edu/resource/florentinedrawings/berenson1961</i> <br><br>
+          
+         <h2> Statement Statistics </h2>
+          <table class="table table-striped">
+            <tbody>
+              <tr>
+                <td>Number Of Distinct Statements</td>
+                <td><semantic-query query='SELECT DISTINCT  (COUNT(*) as ?number) WHERE{ GRAPH <http://data.itatti.harvard.edu/resource/florentinedrawings/berenson1961>{?s ?p ?o} } LIMIT 1' template='{{#each bindings}}{{number.value}}{{/each}}'></semantic-query></td>
+              </tr> 
+              <tr>
+                <td>Number Of Distinct Subjects</td>
+                <td><semantic-query query='SELECT  (COUNT(DISTINCT ?s) as ?number) WHERE{ GRAPH <http://data.itatti.harvard.edu/resource/florentinedrawings/berenson1961>{?s ?p ?o} } LIMIT 1' template='{{#each bindings}}{{number.value}}{{/each}}'></semantic-query></td>
+              </tr>
+              <tr>
+                <td>Number Of Distinct Predicates</td>
+                <td><semantic-query query='SELECT  (COUNT(DISTINCT ?p) as ?number) WHERE{ GRAPH <http://data.itatti.harvard.edu/resource/florentinedrawings/berenson1961>{?s ?p ?o} } LIMIT 1' template='{{#each bindings}}{{number.value}}{{/each}}'></semantic-query></td>
+              </tr>
+              <tr>
+                <td>Number Of Distinct Object Literals</td>
+                <td><semantic-query query='SELECT  (COUNT(DISTINCT ?o) as ?number) WHERE{ GRAPH <http://data.itatti.harvard.edu/resource/florentinedrawings/berenson1961>{?s ?p ?o. FILTER isLiteral(?o)} } LIMIT 1' template='{{#each bindings}}{{number.value}}{{/each}}'></semantic-query></td>
+              </tr>
+              <tr>
+                <td>Number Of Distinct Object IRIs</td>
+                <td><semantic-query query='SELECT  (COUNT(DISTINCT ?o) as ?number) WHERE{ GRAPH <http://data.itatti.harvard.edu/resource/florentinedrawings/berenson1961>{?s ?p ?o. FILTER isURI(?o)} } LIMIT 1' template='{{#each bindings}}{{number.value}}{{/each}}'></semantic-query></td>
+              </tr>
+            </tbody>
+           </table>  
+          <h2> Class Usage </h2>
+          <i>The chart is limit to display the top 20 classes only.</i>
+          <semantic-chart type="bar" 
+                          provider="chartjs" 
+                          query="SELECT ?class (COUNT(DISTINCT ?s) AS ?usage) WHERE { GRAPH <http://data.itatti.harvard.edu/resource/florentinedrawings/berenson1961> {?s a ?class.}  }GROUP BY ?class ORDER BY DESC(?usage) LIMIT 20" 
+                          sets='[{"dataSetName": "Class Usage", "category": "class", "value": "usage"}]'>
+          </semantic-chart>
+          <h2> Propterty Usage </h2>
+					<i>The chart is limit to display the top 20 properties only.</i>
+          <semantic-chart type="bar" 
+                          provider="chartjs" 
+                          query="SELECT DISTINCT ?p (COUNT(?p) AS ?usage) WHERE { GRAPH <http://data.itatti.harvard.edu/resource/florentinedrawings/berenson1961> {?s ?p ?o.}  }GROUP BY ?p ORDER BY DESC(?usage) LIMIT 20" 
+                          sets='[{"dataSetName": "Property Usage", "category": "p", "value": "usage"}]'>
+          </semantic-chart>
+      
+<!-- end graph data -->
+        </bs-tab>
+
+              <bs-tab event-key="4" title="Berenson Project Data" style="padding-top:20px;">
+ 
+          
+          
+          <!-- start graph data -->
+          
+    <b>URI</b>: <i style="font-size: 12px;">data.itatti.harvard.edu/resource/florentinedrawings/project2016</i> <br><br>
+          
+         <h2> Statement Statistics </h2>
+          <table class="table table-striped">
+            <tbody>
+              <tr>
+                <td>Number Of Distinct Statements</td>
+                <td><semantic-query query='SELECT DISTINCT  (COUNT(*) as ?number) WHERE{ GRAPH <http://data.itatti.harvard.edu/resource/florentinedrawings/project2016>{?s ?p ?o} } LIMIT 1' template='{{#each bindings}}{{number.value}}{{/each}}'></semantic-query></td>
+              </tr> 
+              <tr>
+                <td>Number Of Distinct Subjects</td>
+                <td><semantic-query query='SELECT  (COUNT(DISTINCT ?s) as ?number) WHERE{ GRAPH <http://data.itatti.harvard.edu/resource/florentinedrawings/project2016>{?s ?p ?o} } LIMIT 1' template='{{#each bindings}}{{number.value}}{{/each}}'></semantic-query></td>
+              </tr>
+              <tr>
+                <td>Number Of Distinct Predicates</td>
+                <td><semantic-query query='SELECT  (COUNT(DISTINCT ?p) as ?number) WHERE{ GRAPH <http://data.itatti.harvard.edu/resource/florentinedrawings/project2016>{?s ?p ?o} } LIMIT 1' template='{{#each bindings}}{{number.value}}{{/each}}'></semantic-query></td>
+              </tr>
+              <tr>
+                <td>Number Of Distinct Object Literals</td>
+                <td><semantic-query query='SELECT  (COUNT(DISTINCT ?o) as ?number) WHERE{ GRAPH <http://data.itatti.harvard.edu/resource/florentinedrawings/project2016>{?s ?p ?o. FILTER isLiteral(?o)} } LIMIT 1' template='{{#each bindings}}{{number.value}}{{/each}}'></semantic-query></td>
+              </tr>
+              <tr>
+                <td>Number Of Distinct Object IRIs</td>
+                <td><semantic-query query='SELECT  (COUNT(DISTINCT ?o) as ?number) WHERE{ GRAPH <http://data.itatti.harvard.edu/resource/florentinedrawings/project2016>{?s ?p ?o. FILTER isURI(?o)} } LIMIT 1' template='{{#each bindings}}{{number.value}}{{/each}}'></semantic-query></td>
+              </tr>
+            </tbody>
+           </table>  
+          <h2> Class Usage </h2>
+          <i>The chart is limit to display the top 20 classes only.</i>
+          <semantic-chart type="bar" 
+                          provider="chartjs" 
+                          query="SELECT ?class (COUNT(DISTINCT ?s) AS ?usage) WHERE { GRAPH <http://data.itatti.harvard.edu/resource/florentinedrawings/project2016> {?s a ?class.}  }GROUP BY ?class ORDER BY DESC(?usage) LIMIT 20" 
+                          sets='[{"dataSetName": "Class Usage", "category": "class", "value": "usage"}]'>
+          </semantic-chart>
+          <h2> Propterty Usage </h2>
+					<i>The chart is limit to display the top 20 properties only.</i>
+          <semantic-chart type="bar" 
+                          provider="chartjs" 
+                          query="SELECT DISTINCT ?p (COUNT(?p) AS ?usage) WHERE { GRAPH <http://data.itatti.harvard.edu/resource/florentinedrawings/project2016> {?s ?p ?o.}  }GROUP BY ?p ORDER BY DESC(?usage) LIMIT 20" 
+                          sets='[{"dataSetName": "Property Usage", "category": "p", "value": "usage"}]'>
+          </semantic-chart>
+      
+<!-- end graph data -->
+        </bs-tab>
+
+      
+      
+      
+     </bs-tabs>
+   </bs-col>
+</bs-row>

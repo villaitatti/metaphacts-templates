@@ -1,0 +1,19 @@
+<bs-row>
+		<bs-col sm=8 sm-offset=2 >
+      <ol class="breadcrumb" style="background:white;border:none;padding-left:0px;">
+        <li>
+          <semantic-link title="System Settings" data-uri="http://www.metaphacts.com/resource/admin/">System Settings</semantic-link>
+        </li>
+        <li class="active">Cache Invalidation</li>
+      </ol>
+      <h2>Cache Invalidation</h2>
+      <hr/>
+
+      <p>
+        Certain system functionality relies heavily on caches such as for fetching resource labels or computing applicable templates.
+        Cache entries are usually automatically being invalidated after a certain period of time.
+        However, during development or system configuration i.e. when data is updated or system configuration such as the template include query changes it might be required to manually invalidate the caches.
+      </p>
+      <mp-admin-cache-invalidation-button></mp-admin-cache-invalidation-button>
+   </bs-col>
+</bs-row>

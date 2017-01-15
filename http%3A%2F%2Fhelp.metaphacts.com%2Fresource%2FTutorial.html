@@ -1,0 +1,207 @@
+<div class="metaphacts_help">
+   <ol class="breadcrumb" style="background:white;border:none;padding-left:0px;">
+    <li>
+      <semantic-link title="Help" uri="http://help.metaphacts.com/resource/Start">Help</semantic-link>
+    </li>
+    <li>
+      <semantic-link title="Documentation" uri="http://help.metaphacts.com/resource/DocumentationOverview">Documentation</semantic-link>
+    </li>
+    <li class="active">Tutorial - Getting Started</li>
+  </ol>
+
+  <h1>Tutorial - Getting Started</h1>
+
+  Taking the first steps with the metaphacts platform? Take this introductory tutorial to learn:
+  <ul>
+    <li>How to import data</li>
+    <li>How to query the data</li>
+    <li>How to visualize the data with rich HTML5 components</li>
+    <li>How to create simple templates</li>
+  </ul>
+
+  Prerequisites: This tutorial assumes that you have installed your own instance of the metaphacts platform. If this is not the case, read the<semantic-link uri="[[resolvePrefix "Help:Installation"]]">installation manual</semantic-link>.
+
+
+    <h2> Introduction </h2>
+  In this tutorial we use a small dataset from the <a href="http://www.w3.org/TR/rdf11-primer/"> RDF Primer document</a>.
+
+  The following figure shows an informal representation of the sample data as a graph:
+
+  <img src="http://www.w3.org/TR/rdf11-primer/example-graph.jpg" alt="Informal graph of the sample data"/>
+  <br>
+  You can download the sample data <a href="/metaphacts/samples/sample.ttl">here</a>.
+
+  <h2> Loading the data </h2>
+  First, please download the <a href="/metaphacts/samples/sample.ttl">sample data</a>.
+  You can now load this data into the backing store via the <semantic-link uri="[[resolvePrefix "Admin:DataImportExport"]]"> data import and export</semantic-link> administration page. 
+
+  <div style="color:red;font-weight: bold; ">
+  [[#if (ask "ASK {  <http://example.org/bob#me> a foaf:Person  }") ]] 
+   Check: It seems that you have already correctly loaded the sample data.
+  [[else]]
+    Check: It seems that you have not yet loaded the sample data.
+  [[/if]]
+  </div>
+
+  <h2> Querying the data </h2>
+  You can now query the data via the <a href="/sparql" target="_blank">SPARQL endpoint</a>.
+  For example, you may want to issue a query  for all statements made about Bob as a subject:<br>
+
+  <code>SELECT * WHERE { &lt;http://example.org/bob#me&gt; ?p ?o }</code><br>
+
+  Simply copy the query and paste it into the editor field of the SPARQL endpoint, then click Execute.
+
+  <h2> Visualizing results </h2>
+  Let’s visualize the results of queries by embedding visualization components in a page.
+
+  <h3> Tables </h3> 
+  We start by visualizing the results in a simple table. For this purpose, go to a new page, e.g. <semantic-link uri="[[resolvePrefix ":TableComponent"]]">TableComponent</semantic-link> and edit the page by clicking on the Edit button ( <i class="fa fa-pencil"></i>). 
+  Copy and paste the component definition below into the page and save the page.
+  <div class="documentation__example">
+       <pre><code>
+<semantic-table config='{
+              "query":"SELECT * WHERE { <http://example.org/bob#me> ?p ?o }",
+                   "columnConfiguration" : [
+                        {"variableName":"s", "displayName":"Subject"}, 
+                        {"variableName":"p", "displayName":"Predicate"},  
+                        {"variableName":"o", "displayName":"Object"}
+                   ]
+            }'>
+ </semantic-table>
+			</code></pre>
+	</div>
+
+  <div style="clear:both;"></div>
+  Next, we want to customize the layout of a query result to not only show a plain table, but to also embed thumbnail images in the result visualization.
+  For this, we make use of the tupleTemplate, which is applied to every result tuple.
+
+  We start with the following SPARQL query, which asks for all resources together label and thumbnail:
+  <div class="documentation__example">
+       <code>
+     		SELECT ?uri ?label ?thumbnail WHERE { ?uri rdfs:label ?label; &lt;http://schema.org/thumbnail &gt; ?thumbnail }
+  			</code>
+   </div>
+
+  <div style="clear:both;"></div>
+  With the following component definition, we define a template that shows a result panel with thumbnails displayed as images, the labels of the resources as captions, and links to the individual resource pages:
+
+  <div class="documentation__example">
+       <pre><code>
+<semantic-table config='{
+              "query":"SELECT ?uri ?label ?thumbnail WHERE { ?uri rdfs:label ?label; <http://schema.org/thumbnail> ?thumbnail }",
+							"layout": {
+                        	"tupleTemplate": "
+                        			<div style=\"height: 250px; width: 250px; margin: 10px;\" class=\"panel panel-default\">         
+                  							<div class=\"panel-heading\" style=\"overflow: hidden; text-overflow: ellipsis;\">
+                   								<a title=\"{{label.value}}\" href=\"/resource/?uri={{uri.value}}\">{{label.value}}</a>
+            										</div>
+            										<div class=\"panel-body\">
+              											<img class=\"img-responsive img-thumbnail\" style=\"max-height:130px;display:block;margin-left:auto;margin-right:auto;\" src=\"{{thumbnail.value}}\"/>
+            										</div>
+          										</div>  "
+                        }
+            }'>
+ </semantic-table>
+			</code></pre>
+  </div>
+  <div style="clear:both;"></div>
+  Again, copy and paste the component definition into a new page, e.g. <semantic-link uri="[[resolvePrefix ":TableComponent2"]]">TableComponent2</semantic-link>. 
+
+  You find further documentation about using the <semantic-link uri="[[resolvePrefix ":SemanticTable"]]">Table Component</semantic-link>.
+
+  <h3> Graphs </h3>
+  <p>	
+    Next, let’s visualize the graph structure of the sample data using the Graph component.
+  	We start by visualizing all entities and their relationships in a single graph.
+  </p>
+
+  The SPARQL query to obtain the entire graph is simple:<br>
+  <code>CONSTRUCT WHERE { ?s ?p ?o }</code>
+
+  <p>
+    To visualize the graph, go to a new page, e.g. <semantic-link uri="[[resolvePrefix ":Graph"]]">Graph</semantic-link>, and embed the following snippet:
+  </p>
+
+  <div class="documentation__example">
+       <pre><code>
+<semantic-graph query='CONSTRUCT WHERE { ?s ?p ?o }'></semantic-graph>
+  		</code></pre>
+  </div>
+	<div style="clear:both;"></div>
+  
+  <h2> Creating a template </h2>
+  Finally, we want to create a template for resources of a particular type.
+  The general templating mechanism is described <semantic-link uri="[[resolvePrefix "Help:TemplateAndApplicationPages"]]"> here </semantic-link>.
+
+  In our example, we create a template for the class foaf:Person.
+  For every person, we want to display:
+  <ul>
+    <li>the person's name</li>
+    <li>an image, if available</li>
+    <li>his interests</li>
+    <li>his friendship relationship</li>
+  </ul>
+
+  To edit a template page, you have two choices:
+  <ul>
+    <li>either go the template page directly, i.e. <a href="/resource/Teampate:foaf:Person">Template:foaf:Person</a></li>
+    <li>or go an instance page, e.g. <a href="/resource/?uri=http%3A%2F%2Fexample.org%2Fbob%23me">Bob</a>, click on <b>Edit</b> and follow the link to the template page.</li>
+  </ul>
+  Now copy and paste the following snippet into the template page:
+
+  <div class="documentation__example">
+       <pre><code>
+<h1> [[{{documentation}}]][[this.label]][[{{/documentation}}]] </h1>
+<bs-row>
+  <bs-col sm="3">
+    <semantic-query query='SELECT ?birth WHERE {??  <http://schema.org/birthDate> ?birth)}' template='<p>Birthdate:{{#each bindings}}{{birth.value}}{{/each}}</p>'></semantic-query>
+    <semantic-query query='SELECT ?thumbnail WHERE {??  <http://schema.org/thumbnail> ?thumbnail)}' template='{{#each bindings}}<img src="{{thumbnail.value}}">{{/each}}'></semantic-query>
+  </bs-col>
+
+  <bs-col sm="3">
+    <b>Friends</b>
+    <semantic-table config='{
+            "query":"SELECT ?friend ?label ?thumbnail WHERE { ?? foaf:knows ?friend. ?friend rdfs:label ?label; <http://schema.org/thumbnail> ?thumbnail }",
+                 "layout" : {
+                          "options":{"showFilter":false},
+                          "tupleTemplate":"<div style=\"height: 250px; width: 250px; margin: 10px;\" class=\"panel panel-default\">         
+                    <div class=\"panel-heading\" style=\"overflow: hidden; text-overflow: ellipsis;\">
+                      <a title=\"{{label.value}}\" href=\"/resource/?uri={{friend.value}}\">{{label.value}}</a>
+                    </div>
+                    <div class=\"panel-body\">
+                      <img class=\"img-responsive img-thumbnail\" style=\"max-height: 130px;display: block;margin-left:auto;margin-right:auto;\" src=\"{{thumbnail.value}}\"/>
+                    </div>
+                </div>"
+                  }
+          }'>
+    </semantic-table>
+  </bs-col>
+
+  <bs-col sm="3">
+    <b>Interests</b>
+    <semantic-table config='{
+            "query":"SELECT ?friend ?label ?thumbnail WHERE { ?? foaf:topic_interest ?topic. ?topic rdfs:label ?label; <http://schema.org/thumbnail> ?thumbnail }",
+                 "layout" : {
+                          "options":{"showFilter":false},
+                          "tupleTemplate":"<div style=\"height: 250px; width: 250px; margin: 10px;\" class=\"panel panel-default\">         
+                    <div class=\"panel-heading\" style=\"overflow: hidden; text-overflow: ellipsis;\">
+                      <a title=\"{{label.value}}\" href=\"/resource/?uri={{topic.value}}\">{{label.value}}</a>
+                    </div>
+                    <div class=\"panel-body\">
+                      <img class=\"img-responsive img-thumbnail\" style=\"max-height: 130px;display: block;margin-left:auto;margin-right:auto;\" src=\"{{thumbnail.value}}\"/>
+                    </div>
+                </div>"
+                  }
+          }'>
+    </semantic-table>
+  </bs-col>
+</bs-row>
+			</code></pre>
+
+  </div>
+  <div style="clear:both;"></div>
+  
+  Now look at the applied result on an instance pages, such as <a href="/resource/?uri=http%3A%2F%2Fexample.org%2Fbob%23me">Bob</a>.
+    <h2> References </h2>
+    Copyright © 2014 W3C® (MIT, ERCIM, Keio, Beihang). This software or document includes material copied from or derived from <a href="http://www.w3.org/TR/rdf11-primer/">http://www.w3.org/TR/rdf11-primer/</a>.
+</div>

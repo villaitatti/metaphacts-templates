@@ -1,0 +1,154 @@
+<bs-row>
+  <bs-col sm=8 sm-offset=2 >
+    <ol class="breadcrumb" style="background:white;border:none;padding-left:0px;">
+      <li>
+        <semantic-link title="System Settings" uri="http://www.metaphacts.com/resource/admin/">System Settings</semantic-link>
+      </li>
+     	<li>
+        <semantic-link title="Data Import and Export" uri="http://www.metaphacts.com/resource/admin/DataImportExport">Data Import and Export</semantic-link>
+      </li>
+      <li class="active">Named Graph: [[urlParam "graph"]]</li>
+    </ol>
+    
+    <h2>Named Graph</h2>
+
+    <b>URI</b>: <i style="font-size: 12px;">[[urlParam "graph"]]</i> <br><br>
+    <bs-tabs unmount-on-exit=true>
+        <bs-tab event-key="1" title="Preview" style="padding-top:20px;">
+          <h2> Statements </h2>
+         <semantic-query query='SELECT  (COUNT(DISTINCT *) as ?number) WHERE{ GRAPH <[[urlParam "graph"]]>{?s ?p ?o} } LIMIT 1' 
+                          template='{{#each bindings}}{{#ifCond number.value ">=" 1000}}<bs-alert bs-style="warning"> The table below is limited to show only a preview of <strong>1000 out of {{number.value}} statements</strong> from the named graph.</bs-alert>{{else}} <bs-alert bs-style="info"> The named graphs contains <strong>{{number.value}}</strong> distinct statements.</bs-alert> {{/ifCond}}{{/each}}'
+          >
+    			</semantic-query>
+          
+          <semantic-table config='{
+              "query":"SELECT ?s ?p ?o WHERE{ GRAPH <[[urlParam "graph"]]>{?s ?p ?o} } LIMIT 1000",
+              "columnConfiguration" : [
+                {"variableName":"s", "displayName":"Subject"},
+                {"variableName":"p", "displayName":"Property"},
+                {"variableName":"o", "displayName":"Object"}
+              ],
+              "layout":{
+                 "options":{
+                    "resultsPerPage":10
+                 }
+                }
+              }'>
+            </semantic-table>
+        </bs-tab>
+        <bs-tab event-key="2" title="Statistics" style="padding-top:20px;">
+          <h2> Statement Statistics </h2>
+          <table class="table table-striped">
+            <tbody>
+              <tr>
+                <td>Number Of Distinct Statements</td>
+                <td><semantic-query query='SELECT DISTINCT  (COUNT(*) as ?number) WHERE{ GRAPH <[[urlParam "graph"]]>{?s ?p ?o} } LIMIT 1' template='{{#each bindings}}{{number.value}}{{/each}}'></semantic-query></td>
+              </tr> 
+              <tr>
+                <td>Number Of Distinct Subjects</td>
+                <td><semantic-query query='SELECT  (COUNT(DISTINCT ?s) as ?number) WHERE{ GRAPH <[[urlParam "graph"]]>{?s ?p ?o} } LIMIT 1' template='{{#each bindings}}{{number.value}}{{/each}}'></semantic-query></td>
+              </tr>
+              <tr>
+                <td>Number Of Distinct Predicates</td>
+                <td><semantic-query query='SELECT  (COUNT(DISTINCT ?p) as ?number) WHERE{ GRAPH <[[urlParam "graph"]]>{?s ?p ?o} } LIMIT 1' template='{{#each bindings}}{{number.value}}{{/each}}'></semantic-query></td>
+              </tr>
+              <tr>
+                <td>Number Of Distinct Object Literals</td>
+                <td><semantic-query query='SELECT  (COUNT(DISTINCT ?o) as ?number) WHERE{ GRAPH <[[urlParam "graph"]]>{?s ?p ?o. FILTER isLiteral(?o)} } LIMIT 1' template='{{#each bindings}}{{number.value}}{{/each}}'></semantic-query></td>
+              </tr>
+              <tr>
+                <td>Number Of Distinct Object IRIs</td>
+                <td><semantic-query query='SELECT  (COUNT(DISTINCT ?o) as ?number) WHERE{ GRAPH <[[urlParam "graph"]]>{?s ?p ?o. FILTER isURI(?o)} } LIMIT 1' template='{{#each bindings}}{{number.value}}{{/each}}'></semantic-query></td>
+              </tr>
+            </tbody>
+           </table>  
+          <h2> Class Usage </h2>
+          <i>The chart is limit to display the top 20 classes only.</i>
+          <semantic-chart type="bar" 
+                          provider="chartjs" 
+                          query="SELECT ?class (COUNT(DISTINCT ?s) AS ?usage) WHERE { GRAPH <[[urlParam "graph"]]> {?s a ?class.}  }GROUP BY ?class ORDER BY DESC(?usage) LIMIT 20" 
+                          sets='[{"dataSetName": "Class Usage", "category": "class", "value": "usage"}]'>
+          </semantic-chart>
+          <h2> Propterty Usage </h2>
+					<i>The chart is limit to display the top 20 properties only.</i>
+          <semantic-chart type="bar" 
+                          provider="chartjs" 
+                          query="SELECT DISTINCT ?p (COUNT(?p) AS ?usage) WHERE { GRAPH <[[urlParam "graph"]]> {?s ?p ?o.}  }GROUP BY ?p ORDER BY DESC(?usage) LIMIT 20" 
+                          sets='[{"dataSetName": "Property Usage", "category": "p", "value": "usage"}]'>
+          </semantic-chart>
+      
+        </bs-tab>
+        <bs-tab event-key="3" title="Graph" style="padding-top:20px;">
+          <semantic-query query='SELECT  (COUNT(DISTINCT *) as ?number) WHERE{ GRAPH <[[urlParam "graph"]]>{?s ?p ?o} } LIMIT 1' 
+                          template='{{#each bindings}}{{#ifCond number.value ">=" 1000}}<bs-alert bs-style="warning"> The graph below is limited to show only a preview of <strong>1000</strong> out of {{number.value}} statements from the named graph<br> As such some edges or nodes might be missing.</bs-alert>{{else}} {{/ifCond}}{{/each}}'
+          >
+    			</semantic-query>
+           <semantic-graph 
+              height='600px' 
+              query='CONSTRUCT { ?s ?p ?o } WHERE { GRAPH <[[urlParam "graph"]]>{?s ?p ?o} } LIMIT 1000' 
+              graph-style='[
+                  {
+                    "selector": "edge",
+                    "style" : {
+                      "target-arrow-shape": "triangle",
+                      "target-arrow-color": "#bbb",
+                      "content": "data(label)",
+                      "text-valign": "center",
+                      "text-halign": "center",
+                      "text-outline-width": "2",
+                      "width": "1",
+                      "text-outline-color": "white",
+                      "font-size": "8px",
+                      "curve-style": "bezier"
+                    }
+                  },
+                  {
+                    "selector": "node",
+                    "style": {
+                      "background-fit": "contain",
+                      "background-color": "white",
+                      "content": "data(label)",
+                      "shape": "ellipse",
+                      "text-valign": "bottom",
+                      "text-halign": "center",
+                      "text-outline-width": "2",
+                      "text-outline-color": "white",
+                      "font-size": "10px",
+                      "border-color": "#bbb",
+                      "border-width": "1",
+                      "width": "40",
+                      "height": "40"
+                    }
+                  }, 
+                   {       
+                    "selector": "node[?isLiteral]",
+                    "style": {
+                      "background-fit": "contain",
+                      "background-color": "#ddd",
+                      "border-color": "#bbb", 
+                      "border-width": "1",   
+                      "content": "data(label)",
+                      "shape": "rectangle",
+                      "text-valign": "center",
+                      "text-halign": "center",
+                      "padding-right": "2",
+                      "padding-left": "2",
+                      "padding-top": "2",
+                      "padding-bottom": "2",
+                      "width": "label",
+                      "height": "label",
+                      "text-outline-color": "#ddd",
+                      "font-size": "10px"
+                    }
+                  }
+                ]'
+            >
+						<semantic-graph-layout-cose-bilkent ideal-edge-length='50'></semantic-graph-layout-cose-bilkent>
+            <semantic-graph-extension-panzoom pan-indicator-min-opacity='0.1'></semantic-graph-extension-panzoom>
+        </semantic-graph>
+
+        </bs-tab>
+
+     </bs-tabs>
+   </bs-col>
+</bs-row>
