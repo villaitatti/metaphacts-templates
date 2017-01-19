@@ -1,0 +1,179 @@
+<bs-row>
+  <bs-col sm=8 sm-offset=2 > 
+<ul>
+  <li><a href="#FlorentineDrawings_Identifier_BB1961">FlorentineDrawings_Identifier_BB1961</a></li>
+  <li><a href="#cataloguerquestion">Cataloguer_Question</a></li>
+ </ul>
+    
+  </bs-col>    
+</bs-row>  
+
+<bs-row>
+  <bs-col sm=8 sm-offset=2 > 
+		<bs-panel header="Project description" collapsible="false">
+  		<p>The following document explains what data is found in each column of the master spreadsheet holding the transcription of the Florentine Drawings database.</p>
+  		<p>The Florentine Drawings database is derived from the three editions (1903, 1938, and 1961) of Bernard Berenson’s book, Drawings of the Florentine Painters. The 1903 and 1938 editions are in English, and the 1961 edition is in Italian. The data has been selectively transcribed; not all information printed in the books is included.</p>
+			<p>The definition of what constitutes a drawing is, as it was in Berenson’s book, not always clear-cut. Though often a single sheet, which might have marks on the recto and the verso, a recto and a verso might be cataloged by Berenson or the drawing’s owner as separate works. Additionally, drawings might be part of a complex object such as a sketchbook. Multiple drawings may have been mounted together.</p>
+    </bs-panel>
+	</bs-col>    
+</bs-row>
+<bs-row>
+  <bs-col sm=8 sm-offset=2 > 
+		<bs-panel header="Data transformation" collapsible="false">
+  		<p>The data in the database consists of drawing records created by Berenson. This data was transcribed in summer 2015 in two phases. In phase one, an Excel spreadsheet was created for each artist (about 61% of total records were transcribed in this phase). In phase two, each transcriber was given one Google sheet to work in, and new columns were added in order to ensure multiple data points were not entered in the same field.</p>
+  		<p>Because the data was transcribed according to different guidelines in the two phases of transcription, separate data cleanup efforts were conducted. The individual artist spreadsheets from phase one were combined into one. The two spreadsheets created in phase two were combined into one.</p>
+			<p>Once each phase’s data was cleaned, the phase one master spreadsheet and the phase two master spreadsheet were combined. Individual drawing identifiers were assigned to each row, using a Python script to add padding zeros.</p>
+    </bs-panel>
+	</bs-col>    
+</bs-row>
+<bs-row>
+  <bs-col sm=8 sm-offset=2 > 
+		<bs-panel header="Data fields" collapsible="false"> 
+			<bs-panel header="FlorentineDrawings_Identifier_BB1961" collapsible="false" id="FlorentineDrawings_Identifier_BB1961">
+        <p>The identifier assigned by the project. This consists of the identifier Berenson assigned a drawing in the 1961 edition, the suffix “-Berenson”, and padding zeros as a prefix in order to create an identifier of uniform length.</p>
+      </bs-panel>
+      <bs-panel header="Country" collapsible="false">
+        <p>Text field. Country in which a drawing’s city is found. Project data derived from the 1961 edition.</p>
+      </bs-panel>
+      <bs-panel header="City" collapsible="false">
+        <p>Text field. City in which a drawing was listed under. Project data derived from the 1961 edition.</p>
+      </bs-panel>
+      <bs-panel header="City_Country" collapsible="false">
+        <p>Text field. Combined City and Country fields. This is to assist with URI matching.</p>
+      </bs-panel>
+      <bs-panel header="Place_URI" collapsible="false">
+        <p>URI from GeoNames.</p>
+      </bs-panel>
+      <bs-panel header="Collection_main" collapsible="false">
+        <p>Text field. Main name of the collection or owner of the drawing. Project data derived from the 1961 edition.</p>
+      </bs-panel>
+      <bs-panel header="Collection_sub" collapsible="false">
+        <p>Text field. Sub-collection to which the drawing belongs (for example, Collection_Main: Windsor Castle, Collection_sub: Royal Library). Project data derived from the 1961 edition.</p>
+      </bs-panel>
+      <bs-panel header="Collection_URI" collapsible="false">
+        <p>URI for Collection_main or Collection_sub from VIAF.</p>
+      </bs-panel>
+      <bs-panel header="Former_collection" collapsible="false">
+        <p>Text field used for former owners or information about auction sales. Project data derived from the 1961 edition.</p>
+      </bs-panel>
+      <bs-panel header="BB_1961_Inventory number" collapsible="false">
+        <p>Text field. Collection inventory or accession number. Not transcribed exactly as represented in the 1961 edition (sometimes periods replacing slashes).</p>
+      </bs-panel>
+      <bs-panel header="Inventory_number_correction" collapsible="false">
+        <p>Text field. Project data derived from handwritten comments in the 1961 edition.</p>
+      </bs-panel>
+      <bs-panel header="MuseumObject_URI" collapsible="false">
+        <p>URI. Used in a small test-case of drawings which have LOD URIs.</p>
+      </bs-panel>
+      <bs-panel header="MuseumObject_URL" collapsible="false">
+        <p>URL. Used for Botticelli drawings when LOD URIs are not available.</p>
+      </bs-panel>
+      <bs-panel header="BB_1961_number_letter" collapsible="false">
+        <p>Text field. This consists of the identifier Berenson assigned a drawing in the 1961 edition. The identifier is usually a number, but may also includes letters.</p>
+      </bs-panel>
+      <bs-panel header="BB_1961_figure number_recto" collapsible="false">
+        <p>Text field. The number indicating a figure reproducing a drawing’s recto.</p>
+      </bs-panel>
+      <bs-panel header="BB_1961_figure number_verso" collapsible="false">
+        <p>Text field. The number indicating a figure reproducing a drawing’s verso.</p>
+      </bs-panel>
+      <bs-panel header="BB_1961_plate number" collapsible="false">
+        <p>Text field. The number indicating a plate reproducing a drawing.</p>
+      </bs-panel>
+      <bs-panel header="BB_1961_Artist_NoQualifier" collapsible="false">
+        <p>Text field. The artist to whom Berenson attributed a drawing in the 1961 edition.</p>
+      </bs-panel>
+      <bs-panel header="Artist_URI" collapsible="false">
+        <p>URI from ULAN.</p>
+      </bs-panel>
+      <bs-panel header="BB_1961_Qualifier" collapsible="false">
+        <p>Text field. Attribution qualifier, such as “School of” or “Imitation of”</p>
+      </bs-panel>
+      <bs-panel header="BB_1961_title_recto" collapsible="false">
+        <p>Text field. Italian language title of the recto of the drawing, transcribed from the 1961 edition.</p>
+      </bs-panel>
+      <bs-panel header="BB_1961_title_verso" collapsible="false">
+        <p>Text field. Italian language title of the verso of the drawing, transcribed from the 1961 edition.</p>
+      </bs-panel>
+      <bs-panel header="BB_1961_title_correction_recto" collapsible="false">
+        <p>Text field. Project data derived from handwritten comments in the 1961 edition. Correction to the title of the recto.</p>
+      </bs-panel>
+      <bs-panel header="BB_1961_title_correction_verso" collapsible="false">
+        <p>Text field. Project data derived from handwritten comments in the 1961 edition. Correction to the title of the verso.</p>
+      </bs-panel>
+      <bs-panel header="BB_1961_technique_recto" collapsible="false">
+        <p>Text field. There are currently five separate fields for technique_recto, since multiple techniques were sometimes used in a drawing. This is to avoid having a field with mutliple cardinality. Technically, this should not be called BB_1961 technique. The data in this field has been transformed so much (it has been translated and only selectively transcribed) that it should really be considered data created by the project.</p>
+      </bs-panel>
+      <bs-panel header="Technique_URI" collapsible="false">
+        <p>URI for technique used in the recto of the drawing.</p>
+      </bs-panel>
+      <bs-panel header="BB_1961_technique_verso" collapsible="false">
+        <p>Text field. There are currently five separate fields for technique_verso, since multiple techniques were sometimes used in a drawing. This is to avoid having a field with mutliple cardinality. Technically, this should not be called BB_1961 technique. The data in this field has been transformed so much (it has been translated and only selectively transcribed) that it should really be considered data created by the project.</p>
+      </bs-panel>
+      <bs-panel header="Technique_URI" collapsible="false">
+        <p>URI for technique used in the recto of the drawing.</p>
+      </bs-panel>
+      <bs-panel header="BB_1961_text_recto" collapsible="false">
+        <p>Text field. Italian language. Additional commentary by Berenson about the recto of a drawing transcribed from the 1961 edition. Exception: if the text was the same as that of the 1938 English edition, instead of a transcription of the text in Italian, the field contains a note indicating that it is the same (“Same as 1938”).</p>
+      </bs-panel>
+      <bs-panel header="BB_1961_text_verso" collapsible="false">
+        <p>Text field. Italian language. Additional commentary by Berenson about the verso of a drawing transcribed from the 1961 edition. If the text was the same as that of the 1938 English edition, instead of a transcription of the text in Italian, the field contains a note indicating that it is the same (“Same as 1938”).</p>
+      </bs-panel>
+      <bs-panel header="BB_1938_number_letter" collapsible="false">
+        <p>Text field. This consists of the identifier Berenson assigned a drawing in the 1938 edition. The identifier is usually a number, but may also includes letters.</p>
+      </bs-panel>
+      <bs-panel header="BB_1938_Artist_NoQualifier" collapsible="false">
+        <p>Text field. The artist to whom Berenson attributed a drawing in the 1938 edition.</p>
+      </bs-panel>
+      <bs-panel header="Artist_URI" collapsible="false">
+        <p>URI from ULAN.</p>
+      </bs-panel>
+      <bs-panel header="BB_1938_Qualifier" collapsible="false">
+        <p>Text field. Attribution qualifier, such as “School of” or “Imitation of”</p>
+      </bs-panel>
+      <bs-panel header="BB_1938_title_recto" collapsible="false">
+        <p>Text field. English language title of the recto of the drawing, transcribed from the 1938 edition.</p>
+      </bs-panel>
+      <bs-panel header="BB_1938_text_recto" collapsible="false">
+        <p>Text field. English language. Additional commentary by Berenson about the recto of a drawing transcribed from the 1938 edition.</p>
+      </bs-panel>
+      <bs-panel header="BB_1938_title_verso" collapsible="false">
+        <p>Text field. English language title of the verso of the drawing, transcribed from the 1938 edition.</p>
+      </bs-panel>
+      <bs-panel header="BB_1938_text_verso" collapsible="false">
+        <p>Text field. English language. Additional commentary by Berenson about the verso of a drawing transcribed from the 1938 edition.</p>
+      </bs-panel>
+      <bs-panel header="BB_1903_number_letter" collapsible="false">
+        <p>Text field. This consists of the identifier Berenson assigned a drawing in the 1903 edition. The identifier is usually a number, but may also includes letters.</p>
+      </bs-panel>
+      <bs-panel header="BB_1903_Artist_NoQualifier" collapsible="false">
+        <p>Text field. The artist to whom Berenson attributed a drawing in the 1903 edition.</p>
+      </bs-panel>
+      <bs-panel header="Artist_URI" collapsible="false">
+        <p>URI from ULAN.</p>
+      </bs-panel>
+      <bs-panel header="BB_1903_Qualifier" collapsible="false">
+        <p>Text field. Attribution qualifier, such as “School of” or “Imitation of”</p>
+      </bs-panel>
+      <bs-panel header="BB_1903_title_recto" collapsible="false">
+        <p>Text field. English language title of the recto of the drawing, transcribed from the 1903 edition.</p>
+      </bs-panel>
+      <bs-panel header="BB_1903_title_verso" collapsible="false">
+        <p>Text field. English language title of the verso of the drawing, transcribed from the 1903 edition.</p>
+      </bs-panel>
+      <bs-panel header="BB_1903_text_recto" collapsible="false">
+        <p>Text field. This consists of the identifier Berenson assigned a drawing in the 1903 edition. The identifier is usually a number, but may also includes letters.</p>
+      </bs-panel>
+      <bs-panel header="BB_1903_text_verso" collapsible="false">
+        <p>Text field. This consists of the identifier Berenson assigned a drawing in the 1903 edition. The identifier is usually a number, but may also includes letters.</p>
+      </bs-panel>
+      <bs-panel header="Cataloguer_Comment" collapsible="false">
+        <p>Field where data entry cataloger included some updates to locations, or indicated a drawing was missing in a particular edition. Not to be included in the database.</p>
+      </bs-panel>
+      <bs-panel header="Cataloguer_Question" collapsible="false">
+        <p>Field where data entry cataloger included questions to the project manager. Not to be included in the database</p>
+        <a id="cataloguerquestion">bla</a>
+      </bs-panel>
+    </bs-panel>
+	</bs-col>    
+</bs-row>

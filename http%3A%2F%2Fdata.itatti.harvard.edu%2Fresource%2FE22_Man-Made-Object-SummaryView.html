@@ -1,0 +1,123 @@
+<!-- styles for table -->
+<style>
+  .field_table tbody{
+   	font-size:1.5em; 
+  }
+  .field_table td{
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .field_table th,td{
+      padding: 10px 20px !important;
+  }
+  .field_table thead{
+    	font-size:1.5em; 
+      border-bottom: 3px solid #ecf0f1;
+  }
+  
+  .field_table td{
+		min-width: 200px;
+  }
+
+</style>
+
+<div data-flex-self="size-x1" class="field_table" style="margin-top:40px;">
+  <div class="table-responsive" data-flex-self="size-x1">
+    <table class="table-striped" style="width: 100%;">
+      <thead role="header">
+        <tr>
+          <th>Field</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Recto Title -->
+        <tr>
+          <td><span class="field_label">Recto Title</span></td>
+          <td>
+              <semantic-query query='SELECT  DISTINCT  ?title WHERE {
+                                  ?? crm:P46_is_composed_of/crm:P102_has_title/rdfs:label ?title.
+                                  ?? crm:P46_is_composed_of [ crm:P2_has_type <http://vocab.getty.edu/aat/300078817>; ] .
+                                }'
+                                template='{{#each bindings}}<div class="field_value">{{title.value}} ({{title.lang}})</div>{{/each}}'>
+             </semantic-query>
+          </td>
+        </tr>
+        
+        <!-- Verso Title -->
+        <tr>
+          <td><span class="field_label">Verso Title</span></td>
+          <td>
+              <semantic-query query='SELECT  DISTINCT  ?title WHERE {
+                                  ?? crm:P46_is_composed_of/crm:P102_has_title/rdfs:label ?title.
+                                  ?? crm:P46_is_composed_of [ crm:P2_has_type <http://vocab.getty.edu/aat/300010292>; ] .
+                                }'
+                                template='{{#each bindings}}<div class="field_value">{{title.value}} ({{title.lang}})</div>{{/each}}'>
+             </semantic-query>
+          </td>
+        </tr>
+        
+        <!-- Identifier -->
+        <tr>
+          <td><span class="field_label">Identifier</span></td>
+          <td>
+              <semantic-query 
+                query='SELECT DISTINCT ?label WHERE { ?? crm:P1_is_identified_by ?identifier. ?identifier rdfs:label ?label.}'
+                template='{{#each bindings}}<div class="field_value">{{label.value}}</div>{{/each}}'>
+              </semantic-query>
+          </td>
+        </tr>
+        
+        <!-- Type -->
+        <tr>
+          <td><span class="field_label">Type</span></td>
+          <td>
+              <semantic-query 
+                query='SELECT DISTINCT ?type WHERE { ?? crm:P2_has_type ?type.}'
+                template='{{#each bindings}}<div class="field_value"><semantic-link uri={{type.value}}></semantic-link></div>{{/each}}'>
+              </semantic-query>
+          </td>
+        </tr>
+        
+        <!-- Production -->
+        <tr>
+          <td><span class="field_label">Production</span></td>
+          <td>
+              <semantic-query query='SELECT  DISTINCT  ?creator WHERE {
+                                  ?? crm:P108i_was_produced_by ?production .
+                                  ?production crm:P14_carried_out_by ?creator .
+                                }'
+                                template='{{#each bindings}}<div class="field_value"><semantic-link uri={{creator.value}}></semantic-link></div>{{/each}}'>
+             </semantic-query>
+          </td>
+        </tr>
+        
+        <!-- At Page -->
+        <tr>
+          <td><span class="field_label">At Page</span></td>
+          <td>
+              <semantic-query query='SELECT  DISTINCT  ?page WHERE {
+                                  ?? <http://dbpedia.org/ontology/atPage> ?page.
+                                }'
+                                template='{{#each bindings}}<div class="field_value">{{page.value}}</div>{{/each}}'>
+             </semantic-query>
+          </td>
+        </tr>
+        
+        
+        <!-- Owner -->
+        <tr>
+          <td><span class="field_label">Current Owner</span></td>
+          <td>
+              <semantic-query query='SELECT  DISTINCT  ?owner WHERE {
+                                  ?? crm:P52_has_current_owner ?owner.
+                                }'
+                                template='{{#each bindings}}<div class="field_value"><semantic-link uri={{owner.value}}></semantic-link></div>{{/each}}'>
+             </semantic-query>
+          </td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </div>
+</div>                   

@@ -14,20 +14,24 @@
 <bs-row>
   
     <bs-col sm=8 sm-offset=2 >
-      <h3> Simple Search</h3> 
-      <semantic-simple-search config='{
-        "query":"
-                          
-SELECT ?uri ?label ?typelabel WHERE { GRAPH  <http://data.itatti.harvard.edu/resource/florentinedrawings/berenson1938> {?uri ?label ?typelabel  }  filter( regex(str(?typelabel),  \"?token\", \"i\" ))  } LIMIT 10                          
-        ",
-        "searchTermVariable":"token",
-        "resourceSelection":{
-          "resourceBindingName":"typelabel",
-          "template":"<span style=\"color: blue;\"></i><a href=\"http://data.itatti.harvard.edu/resource/?uri={{uri.value}}\" target=\"_blank\"> {{typelabel.value}}</a> </span> - ({{label.value}})"
-        },
-        "inputPlaceholder":"Search for something e.g. \"Michelangelo\""
-      }'>
-      </semantic-simple-search>
+      <h3>Search</h3> 
+      <style>
+        .search .tab-content {
+         margin-top:35px;
+        }
+      </style>
+     <div class="search">
+       <bs-tabs unmount-on-exit=true>
+           <bs-tab event-key="1" title="Simple Search" unmount-on-exit=true>
+             [[!-- to show in the include list [[>:SimpleSearch]] --]]
+             <mp-page-loader iri="[[resolvePrefix ":SimpleSearch"]]"></mp-page-loader>
+           </bs-tab>
+           <bs-tab event-key="2" title="Structured Search" unmount-on-exit=true>
+             [[!-- to show in the include list [[>:StructuredSearch]] --]]
+             <mp-page-loader iri="[[resolvePrefix ":StructuredSearch"]]"></mp-page-loader>
+           </bs-tab>
+        </bs-tabs>
+     </div>
   </bs-col>
 </bs-row>
 <hr >

@@ -1,0 +1,26 @@
+<semantic-graph query="
+        prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        prefix person: <http://example.com/person/> 
+        prefix org: <http://example.com/org/> 
+        prefix foaf: <http://xmlns.com/foaf/0.1/>
+        prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+        CONSTRUCT {
+         <http://data.itatti.harvard.edu/resource/florentinedrawings/0000005-Berenson> ?b ?c  
+        } WHERE {                    
+
+             
+                   <http://data.itatti.harvard.edu/resource/florentinedrawings/0000005-Berenson> ?b ?c    
+ 
+       }
+    " height="600" group-by="<http://xmlns.com/foaf/0.1/group>" graph-style='[
+      {
+        "selector": "edge[resource = iri(<http://xmlns.com/foaf/0.1/group>)]",
+        "style": {
+          "visibility": "hidden"
+         }
+      }
+    ]'>
+  <semantic-graph-layout-cose animate="false"></semantic-graph-layout-cose>
+  <semantic-graph-extension-expand-collapse animate="false"></semantic-graph-extension-expand-collapse>
+</semantic-graph>
